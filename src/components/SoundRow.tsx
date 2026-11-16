@@ -27,9 +27,13 @@ export function SoundRow({
 
   useEffect(() => {
     let active = true;
-    void getSoundWaveform(sound, 36).then((computed) => {
-      if (active) setPeaks(computed);
-    });
+    void getSoundWaveform(sound, 36)
+      .then((computed) => {
+        if (active) setPeaks(computed);
+      })
+      .catch(() => {
+        // Keep fallback waveform bars if Web Audio decoding is unavailable
+      });
     return () => {
       active = false;
     };
